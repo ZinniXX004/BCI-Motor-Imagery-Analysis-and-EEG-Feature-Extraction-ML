@@ -55,11 +55,9 @@ import percentage_ERD_ERS
 import csp_scratch
 import ml_analysis
 
-# ==================================================================================
 # CLASS: PlotWidget
 # Purpose: A wrapper for a Matplotlib Figure that includes a Navigation Toolbar.
 #          It is styled for the Dark "Hacker" theme.
-# ==================================================================================
 class PlotWidget(QWidget):
     def __init__(self, parent=None, width=5, height=4, dpi=100, min_height=None):
         super(PlotWidget, self).__init__(parent)
@@ -145,11 +143,9 @@ class PlotWidget(QWidget):
             ax.get_legend().get_frame().set_facecolor('#1a1a1a')
             ax.get_legend().get_frame().set_edgecolor('white')
 
-# ==================================================================================
 # CLASS: ScrollableChannelLayout
 # Purpose: Holds 3 PlotWidgets (C3, Cz, C4) inside a ScrollArea.
 #          This ensures graphs are large enough to be readable and do not overlap.
-# ==================================================================================
 class ScrollableChannelLayout(QWidget):
     def __init__(self, parent=None):
         super(ScrollableChannelLayout, self).__init__(parent)
@@ -220,10 +216,8 @@ class ScrollableChannelLayout(QWidget):
         self.plot_cz.clear_plot()
         self.plot_c4.clear_plot()
 
-# ==================================================================================
 # CLASS: EEGAnalysisWindow
 # Purpose: The Main Application Window.
-# ==================================================================================
 class EEGAnalysisWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -391,9 +385,7 @@ class EEGAnalysisWindow(QMainWindow):
         
         self.log("SYSTEM MEMORY FLUSHED.")
 
-    # ==================================================================================
     # TAB 1: DATA INGESTION & EPOCH INSPECTOR
-    # ==================================================================================
     def init_tab_load(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -574,9 +566,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"INSPECTOR ERROR: {e}")
 
-    # ==================================================================================
     # TAB 2: TIME-FREQUENCY (CWT) - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_cwt(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -676,9 +666,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"CWT ERROR: {e}")
 
-    # ==================================================================================
     # TAB 3: FILTERING - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_filter(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -753,9 +741,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"FILTER ERROR: {e}")
 
-    # ==================================================================================
     # TAB 4: SQUARING - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_squaring(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -803,9 +789,7 @@ class EEGAnalysisWindow(QMainWindow):
             
         self.log("SQUARING COMPLETE.")
 
-    # ==================================================================================
     # TAB 5: AVERAGING - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_averaging(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -873,9 +857,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"AVG ERROR: {e}")
 
-    # ==================================================================================
     # TAB 6: SMOOTHING - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_smoothing(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -937,9 +919,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"SMOOTH ERROR: {e}")
 
-    # ==================================================================================
     # TAB 7: ERD/ERS PERCENTAGE - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_erd(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -1016,9 +996,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"ERD ERROR: {e}")
 
-    # ==================================================================================
     # TAB 8: CSP & FEATURES
-    # ==================================================================================
     def init_tab_csp(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -1124,9 +1102,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"CSP ERROR: {e}")
 
-    # ==================================================================================
     # TAB 9: MACHINE LEARNING
-    # ==================================================================================
     def init_tab_ml(self):
         tab = QWidget()
         layout = QVBoxLayout()

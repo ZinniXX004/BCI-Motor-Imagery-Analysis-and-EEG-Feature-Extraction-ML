@@ -17,9 +17,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import skew, kurtosis
 
-# =========================================================
 # 1. Context & Description Helper
-# =========================================================
 def get_csp_description():
     """
     Returns a descriptive string explaining the CSP algorithm.
@@ -52,9 +50,7 @@ def get_csp_description():
     )
     return description
 
-# =========================================================
 # 2. CSP Implementation (Spatial Features)
-# =========================================================
 class CSP_Scratch:
     """
     Common Spatial Pattern (CSP) algorithm.
@@ -181,9 +177,7 @@ class CSP_Scratch:
         fig.tight_layout()
         return fig
 
-# =========================================================
 # 2. Temporal Feature Extraction (Statistical Features)
-# =========================================================
 class TemporalFeatureExtractor:
     """
     Extracts statistical time-domain features from raw EEG signals.
@@ -282,9 +276,7 @@ class TemporalFeatureExtractor:
         fig.tight_layout()
         return fig
 
-# =========================================================
 # Standalone Test
-# =========================================================
 if __name__ == "__main__":
     print(">> RUNNING STANDALONE TEST: csp_scratch.py")
     

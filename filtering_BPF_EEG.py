@@ -20,9 +20,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-# =========================================================
 # 1. Load C++ Library
-# =========================================================
 dll_name = "eeg_processing.dll"
 dll_path = os.path.abspath(dll_name)
 
@@ -52,9 +50,7 @@ except Exception as e:
     print(f"[ERROR] Failed to load DLL: {e}")
     lib = None
 
-# =========================================================
 # 2. Context & Description Helper
-# =========================================================
 def get_filter_description(low=0.5, high=30.0):
     """
     Returns a descriptive string explaining the Bandpass Filter step.
@@ -82,9 +78,7 @@ def get_filter_description(low=0.5, high=30.0):
     )
     return description
 
-# =========================================================
 # 3. Pure Numpy Filter Design (Math Helper)
-# =========================================================
 def design_butter_bandpass_2nd_order(lowcut, highcut, fs):
     """
     Designs a 2nd-order Butterworth Bandpass Filter using the Bilinear Transform.
@@ -113,9 +107,7 @@ def design_butter_bandpass_2nd_order(lowcut, highcut, fs):
     
     return b, a
 
-# =========================================================
 # 4. Core Filtering Function (Single Channel)
-# =========================================================
 def run_filter_single(eeg_data, fs, low=0.5, high=30.0, order=2):
     """
     Applies the Bandpass filter to a SINGLE channel (1D array).
@@ -153,9 +145,7 @@ def run_filter_single(eeg_data, fs, low=0.5, high=30.0, order=2):
 
     return output
 
-# =========================================================
-# 5. Multi-Channel Wrapper (New Requirement)
-# =========================================================
+# 5. Multi-Channel Wrapper
 def run_filter_multi_channel(eeg_data_3ch, fs, low=0.5, high=30.0, order=2):
     """
     Applies BPF to multiple channels (e.g., C3, Cz, C4).
@@ -179,9 +169,7 @@ def run_filter_multi_channel(eeg_data_3ch, fs, low=0.5, high=30.0, order=2):
         
     return filtered_data
 
-# =========================================================
 # Unit Test (Standalone Execution)
-# =========================================================
 if __name__ == "__main__":
     print(">> RUNNING STANDALONE TEST: filtering_BPF_EEG.py (Multi-Channel)")
     

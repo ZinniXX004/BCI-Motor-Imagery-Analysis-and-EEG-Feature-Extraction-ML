@@ -183,9 +183,7 @@ def load_eeg_data(filepath):
     
     return raw, events, event_id_map, raw.info['sfreq'], session_info
 
-# ==========================================
 # Standalone Test Execution
-# ==========================================
 if __name__ == "__main__":
     print(">> STANDALONE TEST MODE: load_data_eeg_mne.py")
     print(">> This mode allows you to test GDF loading without the GUI.\n")

@@ -19,9 +19,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-# =========================================================
 # 1. Load C++ Library
-# =========================================================
 dll_name = "eeg_processing.dll"
 dll_path = os.path.abspath(dll_name)
 
@@ -61,9 +59,7 @@ except Exception as e:
     print(f"[ERROR] Could not load C++ library. CWT will fail. Details: {e}")
     lib = None
 
-# =========================================================
 # 2. Context & Description Helper (FIXED)
-# =========================================================
 def get_cwt_interpretation(channel_name="Unknown"):
     """
     Returns a descriptive string explaining the Multi-Channel CWT analysis.
@@ -100,9 +96,7 @@ def get_cwt_interpretation(channel_name="Unknown"):
     )
     return description
 
-# =========================================================
 # 3. Core CWT Function (Single Channel)
-# =========================================================
 def run_cwt_single(eeg_data, fs, f_min=4, f_max=40, f_step=1.0, wavelet_type='morlet'):
     """
     Computes CWT for a single 1D array. Helper function.
@@ -135,9 +129,7 @@ def run_cwt_single(eeg_data, fs, f_min=4, f_max=40, f_step=1.0, wavelet_type='mo
     
     return tfr_data, freqs
 
-# =========================================================
 # 4. Multi-Channel Wrapper (Preserved)
-# =========================================================
 def run_cwt_multi_channel(eeg_data_3ch, fs, f_min=4, f_max=40, f_step=1.0, wavelet_type='morlet'):
     """
     Computes CWT for C3, Cz, and C4 sequentially.
@@ -167,9 +159,7 @@ def run_cwt_multi_channel(eeg_data_3ch, fs, f_min=4, f_max=40, f_step=1.0, wavel
 
     return tfr_results, freqs
 
-# =========================================================
 # 5. Wrapper for Single Channel Call (Legacy Support)
-# =========================================================
 def run_cwt(eeg_data, fs, f_min=4, f_max=40, f_step=1.0, wavelet_type='morlet'):
     """
     Wrapper to allow GUI to call run_cwt directly on a single channel segment.
@@ -177,9 +167,7 @@ def run_cwt(eeg_data, fs, f_min=4, f_max=40, f_step=1.0, wavelet_type='morlet'):
     """
     return run_cwt_single(eeg_data, fs, f_min, f_max, f_step, wavelet_type)
 
-# =========================================================
 # Unit Test (Standalone Execution)
-# =========================================================
 if __name__ == "__main__":
     print(">> RUNNING STANDALONE TEST: CWT.py (Multi-Channel)")
     

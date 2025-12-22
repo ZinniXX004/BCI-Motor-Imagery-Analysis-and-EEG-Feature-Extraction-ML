@@ -15,9 +15,7 @@ Dependencies:
 import numpy as np
 import matplotlib.pyplot as plt
 
-# =========================================================
 # 1. Context & Description Helper
-# =========================================================
 def get_averaging_description():
     """
     Returns a descriptive string explaining the Synchronous Averaging step.
@@ -44,9 +42,7 @@ def get_averaging_description():
     )
     return description
 
-# =========================================================
 # 2. Averaging Function
-# =========================================================
 def extract_and_average_epochs(squared_data, events, fs, tmin=-1.0, tmax=4.0):
     """
     Cuts the continuous data into segments and averages them by class.
@@ -129,9 +125,7 @@ def extract_and_average_epochs(squared_data, events, fs, tmin=-1.0, tmax=4.0):
     
     return avg_left, avg_right, time_axis
 
-# =========================================================
 # Unit Test (Standalone Execution)
-# =========================================================
 if __name__ == "__main__":
     print(">> RUNNING STANDALONE TEST: average_all_EEG_trials.py (Multi-Channel)")
     

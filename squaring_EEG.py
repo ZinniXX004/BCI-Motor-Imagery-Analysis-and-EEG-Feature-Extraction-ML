@@ -15,9 +15,7 @@ Dependencies:
 import numpy as np
 import matplotlib.pyplot as plt
 
-# =========================================================
 # 1. Context & Description Helper
-# =========================================================
 def get_squaring_description():
     """
     Returns a descriptive string explaining the Squaring step.
@@ -44,9 +42,7 @@ def get_squaring_description():
     )
     return description
 
-# =========================================================
 # 2. Squaring Function
-# =========================================================
 def square_signal(eeg_data):
     """
     Computes the square of the EEG signal (Instantaneous Power).
@@ -66,9 +62,7 @@ def square_signal(eeg_data):
     
     return power_data
 
-# =========================================================
 # Unit Test (Standalone Execution)
-# =========================================================
 if __name__ == "__main__":
     print(">> RUNNING STANDALONE TEST: squaring_EEG.py (Multi-Channel)")
     

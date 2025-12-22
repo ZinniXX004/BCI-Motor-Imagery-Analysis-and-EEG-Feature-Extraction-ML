@@ -19,9 +19,7 @@ Dependencies:
     - csp_scratch (Custom Module containing CSP and Temporal Extractors)
 """
 
-# =========================================================
 # 1. IMPORTS
-# =========================================================
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -45,9 +43,7 @@ from sklearn.preprocessing import StandardScaler
 # Custom Project Modules
 import csp_scratch
 
-# =========================================================
 # 2. CONTEXT & DESCRIPTION HELPER
-# =========================================================
 def get_ml_description():
     """
     Returns a descriptive string explaining the Machine Learning comparison strategy.
@@ -73,9 +69,7 @@ def get_ml_description():
     )
     return description
 
-# =========================================================
 # 3. MACHINE LEARNING PIPELINE CLASS
-# =========================================================
 class ML_Pipeline:
     """
     Manages the end-to-end Machine Learning process:
@@ -105,9 +99,7 @@ class ML_Pipeline:
         self.model_metrics = {}    # Stores dictionary of results (Accuracy, F1, etc.)
         self.best_model_name = None
 
-    # ---------------------------------------------------------
     # Internal Helper: Bandpass Filter
-    # ---------------------------------------------------------
     def _internal_bandpass_filter(self, data, fs, lowcut=8.0, highcut=30.0, order=5):
         """
         Applies a specific Bandpass Filter (Butterworth) for ML preprocessing.
@@ -143,9 +135,7 @@ class ML_Pipeline:
         
         return y
 
-    # ---------------------------------------------------------
     # Data Preparation (Segmentation)
-    # ---------------------------------------------------------
     def prepare_data(self, raw_data, events, fs, tmin=0.5, tmax=3.5):
         """
         Segments raw EEG data into epochs based on Left/Right cues.
@@ -208,9 +198,7 @@ class ML_Pipeline:
             
         return np.array(trials), np.array(labels)
 
-    # ---------------------------------------------------------
     # Feature Extraction (Fusion)
-    # ---------------------------------------------------------
     def extract_combined_features(self, epochs, labels, is_training=True):
         """
         Performs Feature Fusion: Combines Spatial Features (CSP) and Temporal Features.
@@ -247,9 +235,7 @@ class ML_Pipeline:
         
         return combined_features
 
-    # ---------------------------------------------------------
     # Main Comparison Runner
-    # ---------------------------------------------------------
     def run_full_comparison(self, epochs, labels, test_size=0.25):
         """
         Extracts features and trains 8 Machine Learning models.
@@ -343,9 +329,7 @@ class ML_Pipeline:
         
         return self.model_metrics
 
-    # =========================================================
     # KEY HELPER: GET PREDICTION FOR VISUALIZATION
-    # =========================================================
     def get_prediction(self, model_name):
         """
         Returns y_test (True Labels) and y_pred (Predicted Labels) 
@@ -365,10 +349,7 @@ class ML_Pipeline:
             
         return self.y_test, y_pred
 
-    # =========================================================
     # VISUALIZATION GENERATORS (For GUI Embedding)
-    # =========================================================
-
     def generate_learning_curve(self, model_name):
         """
         Generates a Learning Curve plot.
@@ -540,9 +521,7 @@ class ML_Pipeline:
             
         return details
 
-# =========================================================
 # Standalone Testing Block
-# =========================================================
 if __name__ == "__main__":
     print(">> RUNNING ML_ANALYSIS STANDALONE TEST...")
     

@@ -19,9 +19,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 
-# =========================================================
 # 1. Load C++ Library
-# =========================================================
 dll_name = "eeg_processing.dll"
 dll_path = os.path.abspath(dll_name)
 
@@ -47,9 +45,7 @@ except Exception as e:
     print(f"[ERROR] Failed to load DLL: {e}")
     lib = None
 
-# =========================================================
 # 2. Context & Description Helper
-# =========================================================
 def get_smoothing_description():
     """
     Returns a descriptive string explaining the Moving Average step.
@@ -72,9 +68,7 @@ def get_smoothing_description():
     )
     return description
 
-# =========================================================
 # 3. Smoothing Function Wrapper
-# =========================================================
 def apply_moving_average(power_data, fs, window_sec=0.5):
     """
     Smooths the power data using the C++ backend.
@@ -120,9 +114,7 @@ def apply_moving_average(power_data, fs, window_sec=0.5):
 
     return smoothed_data
 
-# =========================================================
 # Unit Test (Standalone Execution)
-# =========================================================
 if __name__ == "__main__":
     print(">> RUNNING STANDALONE TEST: moving_average_EEG.py (Multi-Channel)")
     
