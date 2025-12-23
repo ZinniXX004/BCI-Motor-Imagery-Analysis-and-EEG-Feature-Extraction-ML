@@ -56,11 +56,7 @@ import percentage_ERD_ERS
 import csp_scratch
 import ml_analysis
 
-# ==================================================================================
 # CLASS: PlotWidget
-# Purpose: Wrapper for Matplotlib Figure + Toolbar.
-#          It is styled for the Dark "Hacker" theme.
-# ==================================================================================
 class PlotWidget(QWidget):
     def __init__(self, parent=None, width=5, height=4, dpi=100, min_height=None):
         super(PlotWidget, self).__init__(parent)
@@ -132,11 +128,7 @@ class PlotWidget(QWidget):
             ax.get_legend().get_frame().set_facecolor('#1a1a1a')
             ax.get_legend().get_frame().set_edgecolor('white')
 
-# ==================================================================================
 # CLASS: ScrollableChannelLayout
-# Purpose: Holds 3 PlotWidgets (C3, Cz, C4) for signal processing tabs.
-#          Allows scrolling so graphs are not squashed.
-# ==================================================================================
 class ScrollableChannelLayout(QWidget):
     def __init__(self, parent=None):
         super(ScrollableChannelLayout, self).__init__(parent)
@@ -197,10 +189,7 @@ class ScrollableChannelLayout(QWidget):
         self.plot_cz.clear_plot()
         self.plot_c4.clear_plot()
 
-# ==================================================================================
 # CLASS: ScrollableFeatureLayout
-# Purpose: Holds 6 PlotWidgets for Tab 8 (CSP + 5 Temporal Features).
-# ==================================================================================
 class ScrollableFeatureLayout(QWidget):
     def __init__(self, parent=None):
         super(ScrollableFeatureLayout, self).__init__(parent)
@@ -251,9 +240,7 @@ class ScrollableFeatureLayout(QWidget):
         for p in self.plots_temporal:
             p.clear_plot()
 
-# ==================================================================================
 # CLASS: EEGAnalysisWindow (Main Application)
-# ==================================================================================
 class EEGAnalysisWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -470,9 +457,7 @@ class EEGAnalysisWindow(QMainWindow):
         
         self.log("SYSTEM MEMORY FLUSHED.")
 
-    # ==================================================================================
     # TAB 1: COMPLEX INGESTION (TRAIN LIST + TEST + EVAL)
-    # ==================================================================================
     '''def init_tab_ingestion(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -795,9 +780,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"PLOT ERROR: {e}")
 
-    # ==================================================================================
     # TAB 2: TIME-FREQUENCY (CWT) - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_cwt(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -902,9 +885,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"CWT ERROR: {e}")
 
-    # ==================================================================================
     # TAB 3: FILTERING - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_filter(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -982,9 +963,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"FILTER ERROR: {e}")
 
-    # ==================================================================================
     # TAB 4: SQUARING - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_squaring(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -1032,9 +1011,7 @@ class EEGAnalysisWindow(QMainWindow):
             
         self.log("SQUARING COMPLETE.")
 
-    # ==================================================================================
     # TAB 5: AVERAGING - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_averaging(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -1103,9 +1080,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"AVG ERROR: {e}")
 
-    # ==================================================================================
     # TAB 6: SMOOTHING - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_smoothing(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -1167,9 +1142,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"SMOOTH ERROR: {e}")
 
-    # ==================================================================================
     # TAB 7: ERD/ERS PERCENTAGE - SCROLLABLE MULTI-PLOT
-    # ==================================================================================
     def init_tab_erd(self):
         tab = QWidget()
         layout = QVBoxLayout()
@@ -1262,9 +1235,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"ERD ERROR: {e}")
 
-    # ==================================================================================
     # TAB 8: FEATURE EXTRACTION (Scrollable with 6 Plots)
-    # ==================================================================================
     def init_tab_features(self):
         tab = QWidget(); l = QVBoxLayout()
         btn = QPushButton("[ EXTRACT FEATURES (FROM ALL TRAINING FILES) ]")
@@ -1357,9 +1328,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"FEATURE ERROR: {e}")
 
-    # ==================================================================================
     # TAB 9: MACHINE LEARNING & INFERENCE
-    # ==================================================================================
     def init_tab_ml(self):
         tab = QWidget(); layout = QVBoxLayout()
         
@@ -1448,72 +1417,6 @@ class EEGAnalysisWindow(QMainWindow):
         
         tab.setLayout(layout)
         self.tabs.addTab(tab, "9. CLASSIFICATION")
-
-    '''def run_ml_comparison(self):
-        if self.ml_epochs is None:
-            QMessageBox.warning(self, "Pipeline Error", "Please run CSP Training (Tab 8) first!")
-            return
-            
-        try:
-            self.log("STARTING FULL MODEL COMPARISON...")
-            self.txt_ml_results.setText(">> TRAINING IN PROGRESS... PLEASE WAIT.\n")
-            QApplication.processEvents()
-            
-            # Run Pipeline
-            self.ml_metrics = self.ml_pipeline.run_full_comparison(self.ml_epochs, self.ml_labels, test_size=0.25)
-            
-            # Sort Results
-            sorted_metrics = sorted(self.ml_metrics.items(), key=lambda x: x[1]['Accuracy'], reverse=True)
-            
-            # Update Dropdown
-            self.combo_ml_plot.clear()
-            self.combo_ml_plot.addItem("Select Model to View...")
-            for name, _ in sorted_metrics:
-                self.combo_ml_plot.addItem(name)
-                
-            # Generate Report Text
-            report = ">> MODEL METRICS REPORT:\n" + "="*50 + "\n"
-            report += f"{'MODEL':<20} | {'ACC':<8} | {'PREC':<8} | {'REC':<8} | {'F1':<8}\n"
-            report += "-"*50 + "\n"
-            
-            names = []
-            accs = []
-            
-            for name, m in sorted_metrics:
-                report += f"{name:<20} | {m['Accuracy']*100:.2f}     | {m['Precision']*100:.2f}     | {m['Recall']*100:.2f}     | {m['F1']:.2f}\n"
-                names.append(name)
-                accs.append(m['Accuracy'] * 100)
-                
-            report += "="*50 + "\n"
-            report += f"BEST MODEL: {sorted_metrics[0][0]}"
-            self.txt_ml_results.setText(report)
-            
-            # Plot Bar Chart
-            self.plot_ml_bar.clear_plot()
-            ax = self.plot_ml_bar.get_axes()
-            bars = ax.bar(names, accs, color='#00ff41', alpha=0.7)
-            self.plot_ml_bar.style_axes(ax, title="MODEL ACCURACY COMPARISON", xlabel="Model", ylabel="Accuracy (%)")
-            
-            # Fix Layout for rotated labels
-            import matplotlib.ticker as ticker
-            ax.xaxis.set_major_locator(ticker.FixedLocator(np.arange(len(names))))
-            ax.set_xticklabels(names, rotation=45, ha='right')
-            self.plot_ml_bar.fig.subplots_adjust(bottom=0.25)
-            
-            # Add labels
-            for bar in bars:
-                height = bar.get_height()
-                ax.text(bar.get_x() + bar.get_width()/2., height,
-                        f'{height:.1f}%', ha='center', va='bottom', color='white', fontsize=9)
-            
-            self.plot_ml_bar.draw()
-            
-            self.combo_ml_plot.setCurrentText(sorted_metrics[0][0]) # Select best model automatically
-            self.log("ML COMPARISON COMPLETE.")
-            
-        except Exception as e:
-            self.log(f"ML ERROR: {e}")
-            self.txt_ml_results.setText(f"ERROR: {e}")'''
             
     def run_ml_comparison(self):
         """
@@ -1611,7 +1514,7 @@ class EEGAnalysisWindow(QMainWindow):
             self.plot_ml_bar.draw()
             
             # 6. Update Dropdown and Text Report
-            self.combo_ml_plot.clear() # Note: In your script it might be self.combo_ml or self.combo_ml_plot
+            self.combo_ml_plot.clear()
             self.combo_ml_plot.addItem("Select Model to View...")
             self.combo_ml_plot.addItems(names)
             
@@ -1693,98 +1596,6 @@ class EEGAnalysisWindow(QMainWindow):
             
         except Exception as e:
             self.log(f"INFERENCE ERROR: {e}")
-    
-    '''def update_ml_view(self):
-        model_name = self.combo_ml_plot.currentText()
-        if "Select" in model_name or model_name not in self.ml_metrics:
-            return
-            
-        try:
-            # 1. Plot Confusion Matrix
-            y_true, y_pred = self.ml_pipeline.get_prediction(model_name)
-            if y_true is None: return
-            
-            from sklearn.metrics import confusion_matrix
-            cm = confusion_matrix(y_true, y_pred)
-            
-            self.plot_ml_cm.clear_plot()
-            ax = self.plot_ml_cm.get_axes()
-            im = ax.imshow(cm, interpolation='nearest', cmap='Greens')
-            cb = self.plot_ml_cm.fig.colorbar(im, ax=ax)
-            cb.ax.yaxis.set_tick_params(color='white')
-            plt.setp(plt.getp(cb.ax.axes, 'yticklabels'), color='white')
-            
-            classes = ['Left', 'Right']
-            ax.set_xticks(np.arange(2))
-            ax.set_yticks(np.arange(2))
-            ax.set_xticklabels(classes)
-            ax.set_yticklabels(classes)
-            
-            thresh = cm.max() / 2.
-            for i in range(cm.shape[0]):
-                for j in range(cm.shape[1]):
-                    ax.text(j, i, format(cm[i, j], 'd'),
-                            ha="center", va="center",
-                            color="white" if cm[i, j] > thresh else "black")
-            
-            self.plot_ml_cm.style_axes(ax, title=f"CONFUSION MATRIX: {model_name}", 
-                                       xlabel="Predicted Label", ylabel="True Label")
-            self.plot_ml_cm.draw()
-            
-            # 2. Plot Performance Curve (Learning Curve or Loss Curve)
-            self.plot_ml_perf.clear_plot()
-            
-            if "MLP" in model_name:
-                fig_loss = self.ml_pipeline.generate_loss_curve(model_name)
-                if fig_loss:
-                    model = self.ml_pipeline.trained_models[model_name]
-                    ax_perf = self.plot_ml_perf.get_axes()
-                    ax_perf.plot(model.loss_curve_, color='#00ff41', linewidth=2)
-                    self.plot_ml_perf.style_axes(ax_perf, title=f"LOSS CURVE: {model_name}", 
-                                                 xlabel="Epochs", ylabel="Loss")
-                    self.plot_ml_perf.draw()
-            else:
-                from sklearn.model_selection import learning_curve
-                model = self.ml_pipeline.trained_models[model_name]
-                ax_perf = self.plot_ml_perf.get_axes()
-                
-                try:
-                    train_sizes, train_scores, test_scores = learning_curve(
-                        model, self.ml_pipeline.X_train, self.ml_pipeline.y_train, 
-                        cv=5, n_jobs=-1, train_sizes=np.linspace(0.2, 1.0, 5)
-                    )
-                    train_mean = np.mean(train_scores, axis=1) * 100
-                    test_mean = np.mean(test_scores, axis=1) * 100
-                    
-                    ax_perf.plot(train_sizes, train_mean, 'o-', color="cyan", label="Training")
-                    ax_perf.plot(train_sizes, test_mean, 'o-', color="magenta", label="Validation")
-                    ax_perf.legend()
-                    self.plot_ml_perf.style_axes(ax_perf, title=f"LEARNING CURVE: {model_name}", 
-                                                 xlabel="Training Samples", ylabel="Accuracy (%)")
-                    self.plot_ml_perf.draw()
-                except ValueError:
-                    ax_perf.text(0.5, 0.5, "Insufficient Data for Curve", color='white', ha='center')
-                    self.plot_ml_perf.draw()
-
-            # 3. Update Detailed Table
-            details = self.ml_pipeline.get_detailed_predictions(model_name)
-            
-            # FIX: Ensure we use the correct variable name 'table_ml_details'
-            self.table_ml_details.setRowCount(len(details))
-            for i, (tid, true_l, pred_l, status) in enumerate(details):
-                self.table_ml_details.setItem(i, 0, QTableWidgetItem(str(tid)))
-                self.table_ml_details.setItem(i, 1, QTableWidgetItem(true_l))
-                self.table_ml_details.setItem(i, 2, QTableWidgetItem(pred_l))
-                
-                item_status = QTableWidgetItem(status)
-                if status == "CORRECT":
-                    item_status.setForeground(QColor("#00ff41"))
-                else:
-                    item_status.setForeground(QColor("#ff3333"))
-                self.table_ml_details.setItem(i, 3, item_status)
-                
-        except Exception as e:
-            self.log(f"VISUAL UPDATE ERROR: {e}")'''
             
     def update_ml_view(self):
         """
@@ -1902,6 +1713,7 @@ class EEGAnalysisWindow(QMainWindow):
         except Exception as e:
             self.log(f"VISUAL UPDATE ERROR: {e}")
 
+# Main Execution without debugging purpose
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = EEGAnalysisWindow()
